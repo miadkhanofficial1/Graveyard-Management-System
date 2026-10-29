@@ -257,6 +257,11 @@ const TrackerView: React.FC = () => {
                             href={url}
                             target="_blank"
                             rel="noreferrer"
+                            onClick={(e) => {
+                              if (!url || url === '#' || url.trim() === '') {
+                                e.preventDefault();
+                              }
+                            }}
                             className="text-accentEmerald underline font-mono text-[11px]"
                           >
                             Exb #{i + 1}

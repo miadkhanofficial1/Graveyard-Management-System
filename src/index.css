@@ -159,19 +159,27 @@
   filter: invert(100%) hue-rotate(180deg) brightness(90%) contrast(90%);
 }
 
-/* Compact 1-Page Official Print Layout */
+/* Solid Clean 1-Page Official A4 Print Layout */
 @media print {
   @page {
     size: A4 portrait;
-    margin: 10mm;
+    margin: 8mm;
   }
 
+  html,
   body {
     background: #ffffff !important;
     color: #000000 !important;
-    font-size: 11px !important;
+    font-size: 10px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 100% !important;
+    overflow: visible !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
+  /* Strip all non-printable UI, backdrops, navbars, and buttons */
   nav,
   header,
   footer,
@@ -181,34 +189,39 @@
     display: none !important;
   }
 
+  #printable-docket-container {
+    position: static !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: 275mm !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background: #ffffff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
   #printable-docket {
     padding: 0 !important;
     margin: 0 !important;
-    font-size: 10.5px !important;
-    line-height: 1.35 !important;
+    font-size: 9.5px !important;
+    line-height: 1.25 !important;
     color: #000000 !important;
-    background: transparent !important;
-  }
-
-  #printable-docket h1 {
-    font-size: 15px !important;
-  }
-
-  #printable-docket .space-y-6 > * + * {
-    margin-top: 0.75rem !important;
-  }
-
-  #printable-docket .space-y-4 > * + * {
-    margin-top: 0.5rem !important;
-  }
-
-  #printable-docket .space-y-2 > * + * {
-    margin-top: 0.25rem !important;
+    max-height: 275mm !important;
+    overflow: hidden !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
   }
 
   .print-page-locked {
     page-break-inside: avoid !important;
     break-inside: avoid !important;
+    page-break-after: avoid !important;
   }
 }
 

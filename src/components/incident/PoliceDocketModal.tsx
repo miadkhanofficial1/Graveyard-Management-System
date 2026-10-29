@@ -43,9 +43,10 @@ export const PoliceDocketModal: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-900/70 dark:bg-black/85 backdrop-blur-sm animate-in fade-in duration-150">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-900/70 dark:bg-black/85 backdrop-blur-sm animate-in fade-in duration-150 print:p-0 print:m-0 print:bg-white print:fixed print:inset-0">
       <div
-        className="relative w-full max-w-3xl bg-white dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-darkMuted shadow-2xl overflow-hidden flex flex-col max-h-[95vh]"
+        id="printable-docket-container"
+        className="relative w-full max-w-3xl bg-white dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-darkMuted shadow-2xl overflow-hidden flex flex-col max-h-[95vh] print:max-h-[275mm] print:h-auto print:border-none print:shadow-none print:rounded-none print:overflow-hidden print:w-full print:max-w-none"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Top Control Bar */}
@@ -125,7 +126,7 @@ export const PoliceDocketModal: React.FC = () => {
           {/* Section 1 & Section 2 Compact Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 print:grid-cols-2">
             {/* Section 1: Deceased Particulars */}
-            <div className="border border-slate-300 rounded-lg p-2.5 font-sans text-[11px] bg-slate-50 print:bg-white print:p-2 space-y-1">
+            <div className="border border-slate-300 rounded-lg py-1.5 px-2.5 font-sans text-[11px] bg-slate-50 print:bg-white print:py-1.5 print:px-2 space-y-1">
               <h4 className="font-bold text-slate-800 uppercase tracking-wider text-[10px] border-b border-slate-200 pb-0.5">
                 Section 1: Particulars of the Interred Deceased
               </h4>
@@ -150,7 +151,7 @@ export const PoliceDocketModal: React.FC = () => {
             </div>
 
             {/* Section 2: Relative Particulars */}
-            <div className="border border-slate-300 rounded-lg p-2.5 font-sans text-[11px] bg-slate-50 print:bg-white print:p-2 space-y-1">
+            <div className="border border-slate-300 rounded-lg py-1.5 px-2.5 font-sans text-[11px] bg-slate-50 print:bg-white print:py-1.5 print:px-2 space-y-1">
               <h4 className="font-bold text-slate-800 uppercase tracking-wider text-[10px] border-b border-slate-200 pb-0.5">
                 Section 2: Primary Nominee Information
               </h4>
@@ -176,7 +177,7 @@ export const PoliceDocketModal: React.FC = () => {
           </div>
 
           {/* Section 3: Incident Details & Chain of Custody */}
-          <div className="border border-slate-300 rounded-lg p-2.5 font-sans text-[11px] bg-slate-50 print:bg-white print:p-2 space-y-1.5">
+          <div className="border border-slate-300 rounded-lg py-1.5 px-2.5 font-sans text-[11px] bg-slate-50 print:bg-white print:py-1.5 print:px-2 space-y-1.5">
             <h4 className="font-bold text-slate-800 uppercase tracking-wider text-[10px] border-b border-slate-200 pb-0.5">
               Section 3: Incident Narrative & Chain of Custody Log
             </h4>
@@ -223,8 +224,8 @@ export const PoliceDocketModal: React.FC = () => {
                   </span>
                   <div className="flex items-center gap-2">
                     {activeDocketIncident.evidencePhotos.map((url, i) => (
-                      <div key={i} className="w-16 h-12 rounded border border-slate-400 overflow-hidden relative shrink-0">
-                        <img src={url} alt="Evidence" className="w-full h-full object-cover" />
+                      <div key={i} className="h-14 w-20 rounded border border-slate-400 overflow-hidden relative shrink-0">
+                        <img src={url} alt="Evidence" className="h-14 w-20 object-cover rounded" />
                         <span className="absolute bottom-0 right-0 bg-black/75 text-white text-[8px] px-1 font-mono">#{i + 1}</span>
                       </div>
                     ))}

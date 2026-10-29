@@ -19,6 +19,7 @@ import {
 import { useApp } from '../../context/AppContext';
 import { computeHighRiskStatus } from '../../utils/security';
 import { Badge } from '../common/Badge';
+import { PDFPreviewModal } from '../common/PDFPreviewModal';
 
 export const SlotDetailsDrawer: React.FC = () => {
   const {
@@ -50,6 +51,18 @@ export const SlotDetailsDrawer: React.FC = () => {
   const [phoneLast4Input, setPhoneLast4Input] = useState('');
   const [unlockKeyInput, setUnlockKeyInput] = useState('');
   const [unlockError, setUnlockError] = useState<string | null>(null);
+
+  // Document Preview Modal State
+  const [activePreviewDoc, setActivePreviewDoc] = useState<string | null>(null);
+
+  // Mobile Bottom Sheet Detection
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     if (deceasedList.length > 0) {
@@ -109,7 +122,7 @@ export const SlotDetailsDrawer: React.FC = () => {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 pointer-events-none flex justify-end">
+      <div className="fixed inset-0 z-50 pointer-events-none flex items-end md:items-stretch md:justify-end">
         {/* Backdrop for mobile & desktop */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -119,14 +132,19 @@ export const SlotDetailsDrawer: React.FC = () => {
           className="fixed inset-0 bg-black/40 backdrop-blur-xl pointer-events-auto"
         />
 
-        {/* Right Drawer (iOS VisionOS Glass Panel) */}
+        {/* Bottom Sheet on Mobile / Right Drawer on Desktop */}
         <motion.div
-          initial={{ x: '100%', y: 0 }}
-          animate={{ x: 0, y: 0 }}
-          exit={{ x: '100%', y: 0 }}
-          transition={{ type: 'spring', damping: 28, stiffness: 300 }}
-          className="pointer-events-auto relative w-full md:w-[500px] h-full liquid-glass-island border-l border-white/30 dark:border-white/10 shadow-2xl flex flex-col overflow-hidden z-50 rounded-l-[32px]"
+          initial={isMobile ? { y: '100%', opacity: 0 } : { x: '100%', opacity: 0 }}
+          animate={isMobile ? { y: 0, opacity: 1 } : { x: 0, opacity: 1 }}
+          exit={isMobile ? { y: '100%', opacity: 0 } : { x: '100%', opacity: 0 }}
+          transition={{ type: 'spring', damping: 28, stiffness: 320 }}
+          className="pointer-events-auto relative w-full md:w-[500px] h-[85vh] md:h-full max-h-[85vh] md:max-h-full liquid-glass-island border-t md:border-t-0 md:border-l border-white/30 dark:border-white/10 shadow-2xl flex flex-col overflow-hidden z-50 rounded-t-[32px] md:rounded-t-none md:rounded-l-[32px]"
         >
+          {/* iOS Mobile Bottom Sheet Drag Handle */}
+          <div className="pt-3 pb-1 flex justify-center md:hidden shrink-0">
+            <div className="w-12 h-1.5 rounded-full bg-slate-300 dark:bg-slate-600" />
+          </div>
+
           {/* Header */}
           <div className="p-6 border-b border-black/5 dark:border-white/10 bg-white/30 dark:bg-white/5 backdrop-blur-xl">
             <div className="flex items-start justify-between gap-3">
@@ -531,15 +549,14 @@ export const SlotDetailsDrawer: React.FC = () => {
                               <FileText className="w-4 h-4 text-accentEmerald shrink-0" />
                               {doc.name}
                             </span>
-                            <a
-                              href={doc.url}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="text-[11px] font-bold text-accentEmerald hover:underline flex items-center gap-1 shrink-0"
+                            <button
+                              type="button"
+                              onClick={() => setActivePreviewDoc(doc.name)}
+                              className="text-[11px] font-bold text-accentEmerald hover:underline flex items-center gap-1 shrink-0 p-1 cursor-pointer"
                             >
-                              <span>View PDF</span>
+                              <span>View Document</span>
                               <ExternalLink className="w-3 h-3" />
-                            </a>
+                            </button>
                           </div>
                         ))}
                       </div>
@@ -599,6 +616,16 @@ export const SlotDetailsDrawer: React.FC = () => {
           </div>
         </motion.div>
       </div>
+
+      {/* Legal Document & PDF Preview Modal */}
+      <PDFPreviewModal
+        isOpen={!!activePreviewDoc}
+        onClose={() => setActivePreviewDoc(null)}
+        documentName={activePreviewDoc || ''}
+        deceased={currentDeceased}
+        slot={slot}
+        graveyardName={selectedGraveyard?.name}
+      />
     </AnimatePresence>
   );
 };
