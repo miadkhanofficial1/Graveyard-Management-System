@@ -21,7 +21,7 @@ import type {
 } from '../types';
 import { initialMockData } from '../data/mockData';
 
-const STORAGE_KEY = 'gms_mock_database_v1';
+const STORAGE_KEY = 'gms_database_v2';
 const SELECTED_GY_KEY = 'gms_selected_graveyard_id';
 const ACTIVE_ROLE_KEY = 'gms_active_user_role';
 const OFFLINE_QUEUE_KEY = 'gms_patrol_offline_queue';
@@ -289,7 +289,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   });
 
   // Active View
-  const [activeView, setActiveView] = useState<ActiveView>('tracker');
+  const [activeView, setActiveView] = useState<ActiveView>('directory');
 
   // Search dialog
   const [isSearchOpen, setIsSearchOpen] = useState(false);

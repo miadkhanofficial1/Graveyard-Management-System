@@ -3,7 +3,6 @@ import { ThemeProvider } from './context/ThemeContext';
 import { AppProvider, useApp } from './context/AppContext';
 import { Layout } from './components/layout/Layout';
 import { GraveyardDirectory } from './components/directory/GraveyardDirectory';
-import { FloatingSearchOverlay } from './components/search/FloatingSearchOverlay';
 import { QuickStats } from './components/dashboard/QuickStats';
 import { OverviewCards } from './components/dashboard/OverviewCards';
 import { GridControls } from './components/grid/GridControls';
@@ -22,7 +21,6 @@ import {
   Clock,
   Camera,
   ArrowLeft,
-  Building2,
   MapPin,
   Box,
   FileText,
@@ -282,28 +280,8 @@ const TrackerView: React.FC = () => {
 
 const DirectoryLandingView: React.FC = () => {
   return (
-    <div className="space-y-8">
-      {/* Floating Hero Search Overlay */}
-      <div className="relative pt-2 pb-6 text-center space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/60 text-xs font-bold">
-          <Building2 className="w-3.5 h-3.5 text-accentEmerald" />
-          <span>Unified National Cemetery & Memorial Network</span>
-        </div>
-
-        <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white max-w-3xl mx-auto">
-          Graveyard Management & <span className="text-accentEmerald">Spatial Tracker</span>
-        </h1>
-        <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
-          Search registered municipal graveyards, track multi-occupancy stacked burials, and locate ancestral plots with cryptographic token verification.
-        </p>
-
-        {/* Floating Search Overlay Input */}
-        <div className="pt-2">
-          <FloatingSearchOverlay />
-        </div>
-      </div>
-
-      {/* Directory & Interactive Map */}
+    <div className="space-y-3">
+      {/* Immediate Directory & Map Viewport */}
       <GraveyardDirectory />
     </div>
   );

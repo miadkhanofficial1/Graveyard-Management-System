@@ -7,6 +7,7 @@ import { ReportIncidentModal } from '../incident/ReportIncidentModal';
 import { PoliceDocketModal } from '../incident/PoliceDocketModal';
 import { BurialReceiptModal } from '../finance/BurialReceiptModal';
 import { ToastContainer } from '../common/Toast';
+import { IslamicSplashLoader } from '../common/IslamicSplashLoader';
 import { useApp } from '../../context/AppContext';
 import { ShieldCheck } from 'lucide-react';
 
@@ -15,6 +16,9 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
 
   return (
     <div className="min-h-screen flex flex-col bg-lightBg dark:bg-darkBg text-slate-900 dark:text-slate-100 transition-colors duration-200">
+      {/* Respectful Initial Splash Loader */}
+      <IslamicSplashLoader />
+
       <Navbar />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
