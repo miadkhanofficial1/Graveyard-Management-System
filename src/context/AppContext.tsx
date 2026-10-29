@@ -416,10 +416,34 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     [db.blocks, selectedGraveyardId]
   );
 
-  const currentSlots = useMemo(
-    () => db.slots.filter((s) => s.graveyardId === selectedGraveyardId),
-    [db.slots, selectedGraveyardId]
-  );
+  const currentSlots = useMemo(() => {
+    const rawSlots = db.slots.filter((s) => s.graveyardId === selectedGraveyardId);
+    const gy = db.graveyards.find((g) => g.id === selectedGraveyardId);
+    if (!gy) return rawSlots;
+
+    return rawSlots.map((slot) => {
+      if (slot.coordinates) return slot;
+      const block = db.blocks.find((b) => b.id === slot.blockId);
+      let baseLat = gy.coordinates.lat;
+      let baseLng = gy.coordinates.lng;
+
+      if (block?.boundaryPolygon && block.boundaryPolygon.length > 0) {
+        const lats = block.boundaryPolygon.map((p) => p[0]);
+        const lngs = block.boundaryPolygon.map((p) => p[1]);
+        baseLat = (Math.min(...lats) + Math.max(...lats)) / 2 + 0.00020;
+        baseLng = (Math.min(...lngs) + Math.max(...lngs)) / 2 - 0.00028;
+      }
+
+      // Dense realistic cemetery ground spacing (~5.5 meters between plots)
+      const lat = baseLat - (slot.row - 1) * 0.000052;
+      const lng = baseLng + (slot.col - 1) * 0.000065;
+
+      return {
+        ...slot,
+        coordinates: { lat, lng },
+      };
+    });
+  }, [db.slots, db.graveyards, db.blocks, selectedGraveyardId]);
 
   const currentPatrolLogs = useMemo(
     () => db.patrolLogs.filter((p) => p.graveyardId === selectedGraveyardId),
@@ -449,7 +473,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const getSlotById = (slotId: string): Slot | undefined => {
-    return db.slots.find((s) => s.id === slotId);
+    return currentSlots.find((s) => s.id === slotId) || db.slots.find((s) => s.id === slotId);
   };
 
   const getBlockById = (blockId: string): Block | undefined => {

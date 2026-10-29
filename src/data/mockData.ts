@@ -9,6 +9,14 @@ export const initialMockData: MockDatabase = {
       district: 'Dhaka',
       address: 'Mohammadpur - Rayerbazar Embankment Rd, Dhaka 1207',
       coordinates: { lat: 23.7485, lng: 90.3582 },
+      boundaryPolygon: [
+        [23.7504, 90.3562],
+        [23.7511, 90.3583],
+        [23.7497, 90.3606],
+        [23.7476, 90.3602],
+        [23.7464, 90.3581],
+        [23.7470, 90.3561],
+      ],
       totalSlots: 1200,
       occupiedSlots: 840,
       status: 'Approved',
@@ -22,6 +30,14 @@ export const initialMockData: MockDatabase = {
       district: 'Dhaka',
       address: 'Road 11, Block D, Banani, Dhaka 1213',
       coordinates: { lat: 23.7937, lng: 90.4043 },
+      boundaryPolygon: [
+        [23.7954, 90.4030],
+        [23.7957, 90.4055],
+        [23.7943, 90.4063],
+        [23.7923, 90.4057],
+        [23.7919, 90.4035],
+        [23.7936, 90.4024],
+      ],
       totalSlots: 650,
       occupiedSlots: 495,
       status: 'Approved',
@@ -39,6 +55,14 @@ export const initialMockData: MockDatabase = {
       rowCount: 4,
       colCount: 5,
       description: 'Standard density single & double layer burials with clay-loam soil',
+      boundaryPolygon: [
+        [23.7501, 90.3566],
+        [23.7505, 90.3581],
+        [23.7491, 90.3585],
+        [23.7487, 90.3570],
+      ],
+      soilCategory: 'Moist',
+      defaultCooldownMonths: 24,
     },
     {
       id: 'blk-01-b',
@@ -47,6 +71,14 @@ export const initialMockData: MockDatabase = {
       rowCount: 4,
       colCount: 5,
       description: 'Designated for triple-tier stacked burials and hereditary plots',
+      boundaryPolygon: [
+        [23.7498, 90.3584],
+        [23.7493, 90.3602],
+        [23.7479, 90.3598],
+        [23.7484, 90.3580],
+      ],
+      soilCategory: 'Standard',
+      defaultCooldownMonths: 24,
     },
     {
       id: 'blk-01-c',
@@ -55,6 +87,14 @@ export const initialMockData: MockDatabase = {
       rowCount: 3,
       colCount: 4,
       description: 'Extended cooldown zone with natural decomposition monitoring',
+      boundaryPolygon: [
+        [23.7482, 90.3568],
+        [23.7480, 90.3588],
+        [23.7468, 90.3583],
+        [23.7470, 90.3563],
+      ],
+      soilCategory: 'Sandy',
+      defaultCooldownMonths: 18,
     },
 
     // Graveyard 02: Banani
@@ -65,6 +105,14 @@ export const initialMockData: MockDatabase = {
       rowCount: 4,
       colCount: 4,
       description: 'High-elevation sandy soil sector with quick natural maturation',
+      boundaryPolygon: [
+        [23.7951, 90.4033],
+        [23.7953, 90.4050],
+        [23.7941, 90.4052],
+        [23.7939, 90.4035],
+      ],
+      soilCategory: 'Sandy',
+      defaultCooldownMonths: 18,
     },
     {
       id: 'blk-02-b',
@@ -73,6 +121,14 @@ export const initialMockData: MockDatabase = {
       rowCount: 4,
       colCount: 5,
       description: 'High-security zone with regular biometric patrol sweeps',
+      boundaryPolygon: [
+        [23.7942, 90.4037],
+        [23.7944, 90.4058],
+        [23.7931, 90.4054],
+        [23.7929, 90.4033],
+      ],
+      soilCategory: 'Standard',
+      defaultCooldownMonths: 24,
     },
     {
       id: 'blk-02-c',
@@ -81,34 +137,14 @@ export const initialMockData: MockDatabase = {
       rowCount: 3,
       colCount: 4,
       description: 'Cooldown testing section with moisture monitoring sensors',
-    },
-
-    // Graveyard 03: Uttara Sector 12 Municipal Cemetery
-    {
-      id: 'blk-03-a',
-      graveyardId: 'gy-03',
-      name: 'Block A (Avenue 4 Sector)',
-      rowCount: 4,
-      colCount: 5,
-      description: 'Newly developed modern civic cemetery sector with alluvial soil',
-    },
-    {
-      id: 'blk-03-b',
-      graveyardId: 'gy-03',
-      name: 'Block B (North Garden)',
-      rowCount: 4,
-      colCount: 4,
-      description: 'Lawn cemetery section with engineered drainage and stone paths',
-    },
-
-    // Graveyard 04: Mirpur Martyred Intellectuals Extension
-    {
-      id: 'blk-04-a',
-      graveyardId: 'gy-04',
-      name: 'Block A (Memorial Garden)',
-      rowCount: 4,
-      colCount: 5,
-      description: 'Heritage sanctuary grounds with manicured floral borders',
+      boundaryPolygon: [
+        [23.7930, 90.4038],
+        [23.7932, 90.4056],
+        [23.7921, 90.4053],
+        [23.7920, 90.4036],
+      ],
+      soilCategory: 'Moist',
+      defaultCooldownMonths: 36,
     },
   ],
 

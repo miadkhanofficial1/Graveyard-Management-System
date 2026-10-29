@@ -5,9 +5,8 @@ import { Layout } from './components/layout/Layout';
 import { GraveyardDirectory } from './components/directory/GraveyardDirectory';
 import { QuickStats } from './components/dashboard/QuickStats';
 import { OverviewCards } from './components/dashboard/OverviewCards';
-import { GridControls } from './components/grid/GridControls';
-import { IsometricGrid } from './components/grid/IsometricGrid';
-import { SlotDetailsDrawer } from './components/grid/SlotDetailsDrawer';
+import { GISSatelliteTracker } from './components/tracker/GISSatelliteTracker';
+import { SubsurfaceDossierDrawer } from './components/tracker/SubsurfaceDossierDrawer';
 import { NightPatrolDashboard } from './components/patrol/NightPatrolDashboard';
 import { SuperAdminPortal } from './components/admin/SuperAdminPortal';
 import { GraveyardAdminPortal } from './components/admin/GraveyardAdminPortal';
@@ -22,15 +21,12 @@ import {
   Camera,
   ArrowLeft,
   MapPin,
-  Box,
   FileText,
   PlusCircle,
 } from 'lucide-react';
 
 const TrackerView: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'grid' | 'overview' | 'patrol' | 'incidents'>('grid');
-  const [isIsometric, setIsIsometric] = useState(true);
-  const [zoom, setZoom] = useState(1.0);
+  const [activeTab, setActiveTab] = useState<'matrix' | 'overview' | 'patrol' | 'incidents'>('matrix');
 
   const {
     currentPatrolLogs,
@@ -41,13 +37,6 @@ const TrackerView: React.FC = () => {
     setActiveDocketIncident,
     setIsDocketModalOpen,
   } = useApp();
-
-  const handleZoomIn = () => setZoom((prev) => Math.min(1.45, prev + 0.15));
-  const handleZoomOut = () => setZoom((prev) => Math.max(0.65, prev - 0.15));
-  const handleResetView = () => {
-    setZoom(1.0);
-    setIsIsometric(true);
-  };
 
   return (
     <div className="space-y-6">
@@ -76,22 +65,22 @@ const TrackerView: React.FC = () => {
           </div>
           <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5 flex items-center gap-1">
             <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-            {selectedGraveyard?.address}, {selectedGraveyard?.district} • Real-time spatial tracking & 14-day subsidence surveillance
+            {selectedGraveyard?.address}, {selectedGraveyard?.district} • Real-time GIS satellite matrix & subsurface stratification
           </p>
         </div>
 
         {/* Navigation Tabs */}
         <div className="flex items-center p-1 rounded-xl bg-slate-100 dark:bg-darkCard border border-slate-200 dark:border-darkMuted text-xs font-semibold self-start sm:self-auto overflow-x-auto scrollbar-none">
           <button
-            onClick={() => setActiveTab('grid')}
+            onClick={() => setActiveTab('matrix')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all ${
-              activeTab === 'grid'
+              activeTab === 'matrix'
                 ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm'
                 : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
-            <Box className="w-3.5 h-3.5 text-accentEmerald" />
-            2.5D Spatial Grid
+            <Compass className="w-3.5 h-3.5 text-accentEmerald" />
+            GIS Spatial Matrix
           </button>
 
           <button
@@ -135,21 +124,8 @@ const TrackerView: React.FC = () => {
       {/* Live Metric Counters */}
       <QuickStats />
 
-      {/* TAB 1: 2.5D ISOMETRIC ANIMATED SPATIAL GRID */}
-      {activeTab === 'grid' && (
-        <div className="space-y-4">
-          <GridControls
-            zoom={zoom}
-            onZoomIn={handleZoomIn}
-            onZoomOut={handleZoomOut}
-            onResetView={handleResetView}
-            isIsometric={isIsometric}
-            onToggleIsometric={() => setIsIsometric(!isIsometric)}
-          />
-
-          <IsometricGrid isIsometric={isIsometric} zoom={zoom} />
-        </div>
-      )}
+      {/* TAB 1: GIS SATELLITE MATRIX & DENSE GROUND PLOTS */}
+      {activeTab === 'matrix' && <GISSatelliteTracker />}
 
       {/* TAB 2: FACILITY OVERVIEW & SECTORS */}
       {activeTab === 'overview' && <OverviewCards />}
@@ -277,8 +253,8 @@ const TrackerView: React.FC = () => {
         </div>
       )}
 
-      {/* Responsive Slot Details Drawer */}
-      <SlotDetailsDrawer />
+      {/* Subsurface Multi-Occupancy Stratum & Dossier Drawer */}
+      <SubsurfaceDossierDrawer />
     </div>
   );
 };

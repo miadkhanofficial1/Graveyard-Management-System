@@ -19,6 +19,7 @@ export interface Graveyard {
   district: string;
   address: string;
   coordinates: Coordinates;
+  boundaryPolygon?: [number, number][]; // Real GIS irregular boundary vertices [lat, lng]
   totalSlots: number;
   occupiedSlots: number;
   status: GraveyardStatus;
@@ -37,6 +38,7 @@ export interface Block {
   rowCount: number;
   colCount: number;
   description?: string;
+  boundaryPolygon?: [number, number][]; // Sector block footprint on the satellite map
   soilCategory?: SoilCategory;
   defaultCooldownMonths?: number;
 }
@@ -51,6 +53,7 @@ export interface Slot {
   slotNumber: string; // e.g., "A-101"
   row: number;
   col: number;
+  coordinates?: Coordinates; // GPS coordinates on satellite map
   currentStatus: SlotStatus;
   highRiskAlert: boolean; // First 14 days active
   soilCategory: SoilCategory;
